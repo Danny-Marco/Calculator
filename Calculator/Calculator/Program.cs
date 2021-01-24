@@ -8,15 +8,16 @@ namespace Calculator
     {
         static void Main(string[] args)
         {
-            var oper = GetOperation();
-            Console.WriteLine(oper);
+            var userInput = "1x+2*(3+2)"; // = 11
+            var result = Calculation.Result(userInput);
+            Console.WriteLine(result);
         }
 
         private static string GetOperation()
         {
             while (true)
             {
-                Console.Write("Ввудите операцию: ");
+                Console.Write("Введите операцию: ");
                 var userInput = Console.ReadLine();
                 if (!CheckOperation(userInput))
                 {
@@ -32,7 +33,7 @@ namespace Calculator
         public static bool CheckOperation(string userInput)
         {
             userInput = userInput.Replace(" ", "");
-            var rgx = new Regex(@"^[0-9+\-*%\/\(\)]*$");
+            var rgx = new Regex(@"^[0\.-9+\-*%\/\(\)]*$");
             return rgx.IsMatch(userInput) && userInput.Length > 0 && !StartsWithMathSymbol(userInput);
         }
 
@@ -40,18 +41,11 @@ namespace Calculator
         {
             var firstElement = userInput.First();
             var lastElement = userInput.Last();
-            var firstElementIsSymbol =
-                firstElement == '+'
-                || firstElement == '/'
-                || firstElement == '%'
-                || firstElement == '*';
-            var lastElementIsSymbol =
-                lastElement == '+'
-                || lastElement == '-'
-                || lastElement == '/'
-                || lastElement == '%'
-                || lastElement == '*';
-            
+            const string mathSymbolsForEnd = "+-*/";
+            const string mathSymbolsForStart = "+*/";
+            var firstElementIsSymbol = mathSymbolsForStart.Contains(firstElement);
+            var lastElementIsSymbol = mathSymbolsForEnd.Contains(lastElement);
+
             return firstElementIsSymbol || lastElementIsSymbol;
         }
     }

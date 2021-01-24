@@ -152,7 +152,7 @@ namespace CalculatorTests
         [Test]
         public void CheckOperation_FirstElementIsMinus_ReturnsTrue()
         {
-            const string operation = "-1+2*(3+2)";
+            const string operation = "-1+2.5*(3+2)";
             var currentReturn = Program.CheckOperation(operation);
             Assert.That(currentReturn, Is.True);
         }
@@ -201,14 +201,6 @@ namespace CalculatorTests
         public void CheckOperation_LastElementIsDivide_ReturnsFalse()
         {
             const string operation = "1+2*(3+2)/";
-            var currentReturn = Program.CheckOperation(operation);
-            Assert.That(currentReturn, Is.False);
-        }
-
-        [Test]
-        public void CheckOperation_LastElementIsDPercent_ReturnsFalse()
-        {
-            const string operation = "1+2*(3+2)%";
             var currentReturn = Program.CheckOperation(operation);
             Assert.That(currentReturn, Is.False);
         }
