@@ -11,7 +11,7 @@ namespace Calculator
         private const string MultDevRgx = "[\\*\\/^%]";
         private const string PlusMinusRgx = "[\\+\\-]";
 
-        public static string Result(string expression)
+        public string Result(string expression)
         {
             while (true)
             {

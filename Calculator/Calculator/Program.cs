@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
 
@@ -8,9 +9,24 @@ namespace Calculator
     {
         static void Main(string[] args)
         {
-            var userInput = "1x+2*(3+2)"; // = 11
-            var result = Calculation.Result(userInput);
-            Console.WriteLine(result);
+            ReadExpressionsWriteResult();
+        }
+
+        private static void ReadExpressionsWriteResult()
+        {
+            string path = Directory.GetCurrentDirectory();
+            var fileName = "Expressions.txt";
+            var expsFromFiles = new ExpressionsFromFile(fileName).Expressions;
+
+            foreach (var exp in expsFromFiles)
+            {
+                var result = new Calculation().Result(exp);
+                var writeExp = new WriteExpressionToFile(exp, result);
+                writeExp.WriteToFile();
+            }
+
+            Console.WriteLine("Файл записан!");
+            Console.WriteLine($"Текущий путь к файлу: {path}");
         }
 
         private static string GetOperation()

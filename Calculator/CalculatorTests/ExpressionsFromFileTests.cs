@@ -13,7 +13,8 @@ namespace CalculatorTests
         [SetUp]
         public void SetUp()
         {
-            _expFromFile = new ExpressionsFromFile();
+            const string fileName = "Expressions.txt";
+            _expFromFile = new ExpressionsFromFile(fileName);
             _expressions = _expFromFile.Expressions;
         }
         

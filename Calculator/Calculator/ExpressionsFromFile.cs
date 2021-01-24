@@ -8,9 +8,8 @@ namespace Calculator
         public List<string> Expressions { get; }
         private string _path;
 
-        public ExpressionsFromFile()
+        public ExpressionsFromFile(string fileName)
         {
-            var fileName = "Expressions.txt";
             _path = Path.GetFullPath(fileName);
             Expressions = ReadFileDataToList(_path);
         }
