@@ -13,7 +13,7 @@ namespace Calculator
             _path = Path.GetFullPath(fileName);
             Expressions = ReadFileDataToList(_path);
         }
-        
+
         private List<string> ReadFileDataToList(string path)
         {
             var lines = new List<string>();
@@ -27,6 +27,4 @@ namespace Calculator
             return lines;
         }
     }
-    
-    
 }

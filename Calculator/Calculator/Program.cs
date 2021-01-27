@@ -1,6 +1,5 @@
 ﻿using System;
 using System.IO;
-using System.Linq;
 using System.Text.RegularExpressions;
 
 namespace Calculator
@@ -11,20 +10,18 @@ namespace Calculator
         {
             var userInput = "-3-2";
 
-            var parse = new ParseExpression(userInput);
-            var result = parse.Result();
-            Console.WriteLine(result);
+            var path = GetPathFromUser();
+            ReadExpressionsWriteResult(path);
         }
 
-        private static void ReadExpressionsWriteResult()
+        private static void ReadExpressionsWriteResult(string fileName)
         {
             string path = Directory.GetCurrentDirectory();
-            var fileName = "Expressions.txt";
             var expsFromFiles = new ExpressionsFromFile(fileName).Expressions;
 
             foreach (var exp in expsFromFiles)
             {
-                var result = new Calculation().Result(exp);
+                var result = new ParseExpression(exp).Result();
                 var writeExp = new WriteExpressionToFile(exp, result);
                 writeExp.WriteToFile();
             }
@@ -53,20 +50,41 @@ namespace Calculator
         public static bool CheckOperation(string userInput)
         {
             userInput = userInput.Replace(" ", "");
-            var rgx = new Regex(@"^[0\.-9+\-*%\/\(\)]*$");
-            return rgx.IsMatch(userInput) && userInput.Length > 0 && !StartsWithMathSymbol(userInput);
+            // var rgx = new Regex(@"^-[0\.-9+\-*%\/\(\)]*$");
+            var rgx = new Regex(@"^(?:\d+|\(\d+\s*[-+/*]\s*\d+\))(?:\s*[-+/*]\s*(?:\d+|\(\d+\s*[-+/*]\s*\d+\)))*$");
+            return rgx.IsMatch(userInput) && userInput.Length > 0;
         }
 
-        private static bool StartsWithMathSymbol(string userInput)
+        private static string GetPathFromUser()
         {
-            var firstElement = userInput.First();
-            var lastElement = userInput.Last();
-            const string mathSymbolsForEnd = "+-*/";
-            const string mathSymbolsForStart = "+*/";
-            var firstElementIsSymbol = mathSymbolsForStart.Contains(firstElement);
-            var lastElementIsSymbol = mathSymbolsForEnd.Contains(lastElement);
+            while (true)
+            {
+                Console.WriteLine("Введите путь к файлу");
+                var path = Console.ReadLine();
+                try
+                {
+                    string content = File.ReadAllText(path);
+                    if (string.IsNullOrEmpty(content))
+                    {
+                        throw new ApplicationException($"файл пустой");
+                    }
 
-            return firstElementIsSymbol || lastElementIsSymbol;
+                    return path;
+                }
+
+                catch (FileNotFoundException)
+                {
+                    Console.WriteLine("По указанному пути файл не найден!\n");
+                }
+                catch (ArgumentException)
+                {
+                    Console.WriteLine("Вы ничего не ввели!\n");
+                }
+                catch (ApplicationException ex)
+                {
+                    Console.WriteLine(ex.Message);
+                }
+            }
         }
     }
 }

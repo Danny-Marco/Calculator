@@ -94,14 +94,6 @@ namespace CalculatorTests
         }
 
         [Test]
-        public void CheckOperation_3_Percent_2_ReturnsTrue()
-        {
-            const string operation = "3%2";
-            var currentReturn = Program.CheckOperation(operation);
-            Assert.That(currentReturn, Is.True);
-        }
-
-        [Test]
         public void CheckOperation_3add2Multiple9_ReturnsTrue()
         {
             const string operation = "3+2*9";
@@ -147,14 +139,6 @@ namespace CalculatorTests
             const string operation = "+1+2*(3+2)";
             var currentReturn = Program.CheckOperation(operation);
             Assert.That(currentReturn, Is.False);
-        }
-
-        [Test]
-        public void CheckOperation_FirstElementIsMinus_ReturnsTrue()
-        {
-            const string operation = "-1+2.5*(3+2)";
-            var currentReturn = Program.CheckOperation(operation);
-            Assert.That(currentReturn, Is.True);
         }
 
         [Test]
