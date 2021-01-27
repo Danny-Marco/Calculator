@@ -9,7 +9,11 @@ namespace Calculator
     {
         static void Main(string[] args)
         {
-            ReadExpressionsWriteResult();
+            var userInput = "-3-2";
+
+            var parse = new ParseExpression(userInput);
+            var result = parse.Result();
+            Console.WriteLine(result);
         }
 
         private static void ReadExpressionsWriteResult()
