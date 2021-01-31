@@ -8,8 +8,6 @@ namespace Calculator
     {
         static void Main(string[] args)
         {
-            var userInput = "-3-2";
-
             var path = GetPathFromUser();
             ReadExpressionsWriteResult(path);
         }
@@ -21,7 +19,7 @@ namespace Calculator
 
             foreach (var exp in expsFromFiles)
             {
-                var result = new ParseExpression(exp).Result();
+                var result = new Calculate(exp).Calculation();
                 var writeExp = new WriteExpressionToFile(exp, result);
                 writeExp.WriteToFile();
             }
