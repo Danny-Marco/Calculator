@@ -1,4 +1,3 @@
-using System;
 using System.IO;
 
 namespace Calculator
@@ -14,7 +13,6 @@ namespace Calculator
 
         public void WriteToFile()
         {
-            
             var fileName = "Result.txt";
             var aFile = new FileStream(fileName, FileMode.OpenOrCreate);
             var sw = new StreamWriter(aFile);
